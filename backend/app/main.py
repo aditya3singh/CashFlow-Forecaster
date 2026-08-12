@@ -48,25 +48,18 @@ app.add_exception_handler(Exception, generic_exception_handler)
 
 # ── Module Routers ──
 # Each module registers its own routes via router.py.
-# Import and include them here as they are built.
 
 from app.modules.auth.router import router as auth_router  # noqa: E402
+from app.modules.bank.router import router as bank_router  # noqa: E402
+from app.modules.transaction.router import router as transaction_router  # noqa: E402
+from app.modules.forecast.router import router as forecast_router  # noqa: E402
+from app.modules.alert.router import router as alert_router  # noqa: E402
 
 app.include_router(auth_router)
-
-# Uncomment as modules are built:
-# from app.modules.bank.router import router as bank_router
-# from app.modules.transaction.router import router as transaction_router
-# from app.modules.forecast.router import router as forecast_router
-# from app.modules.alert.router import router as alert_router
-# from app.modules.audit.router import router as audit_router
-# from app.modules.admin.router import router as admin_router
-# app.include_router(bank_router)
-# app.include_router(transaction_router)
-# app.include_router(forecast_router)
-# app.include_router(alert_router)
-# app.include_router(audit_router)
-# app.include_router(admin_router)
+app.include_router(bank_router)
+app.include_router(transaction_router)
+app.include_router(forecast_router)
+app.include_router(alert_router)
 
 
 # ── Health Check ──
