@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notification &amp; Budget Settings - CashFlow Forecaster</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface-variant": "#42484a",
+                      "border-subtle": "#E5E1D8",
+                      "text-muted": "#606060",
+                      "inverse-primary": "#aecbd8",
+                      "tertiary-fixed": "#ffdbcd",
+                      "on-secondary-fixed-variant": "#00513b",
+                      "surface-main": "#F9F7F2",
+                      "on-primary-fixed-variant": "#2f4b55",
+                      "surface-dim": "#dbdad5",
+                      "on-primary": "#ffffff",
+                      "on-secondary-container": "#127256",
+                      "primary-fixed": "#c9e7f4",
+                      "surface-tint": "#47626e",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#6f371e",
+                      "surface-variant": "#e4e2dd",
+                      "secondary-fixed": "#9ef4d0",
+                      "primary-fixed-dim": "#aecbd8",
+                      "on-secondary-fixed": "#002116",
+                      "warning-soft": "#FDF2ED",
+                      "tertiary": "#2b0a00",
+                      "surface-container-highest": "#e4e2dd",
+                      "on-tertiary-container": "#c77f60",
+                      "on-primary-fixed": "#001f28",
+                      "background": "#fbf9f4",
+                      "on-tertiary-fixed": "#360f00",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#1b1c19",
+                      "inverse-on-surface": "#f2f1ec",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "surface-container-high": "#eae8e3",
+                      "primary": "#001820",
+                      "secondary-fixed-dim": "#83d7b5",
+                      "on-primary-container": "#7895a1",
+                      "secondary": "#036c50",
+                      "surface-container": "#f0eee9",
+                      "surface-card": "#FFFFFF",
+                      "error-container": "#ffdad6",
+                      "inverse-surface": "#30312e",
+                      "surface-bright": "#fbf9f4",
+                      "outline": "#72787b",
+                      "error": "#ba1a1a",
+                      "on-error": "#ffffff",
+                      "text-primary": "#1A1A1A",
+                      "on-background": "#1b1c19",
+                      "surface": "#fbf9f4",
+                      "primary-container": "#0f2d37",
+                      "outline-variant": "#c2c7cb",
+                      "success-soft": "#E8F5EE",
+                      "tertiary-container": "#4a1b04",
+                      "surface-container-low": "#f5f3ee",
+                      "secondary-container": "#9ef4d0"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "gutter": "24px",
+                      "margin-mobile": "20px",
+                      "container-max": "1200px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-xl": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "display-price": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl": [
+                              "40px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-price": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #036c50; /* secondary */
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #036c50; /* secondary */
+        }
+        .toggle-checkbox {
+            right: 0;
+            z-index: 1;
+            border-color: #e2e8f0;
+            transition: all 0.3s;
+        }
+        .toggle-label {
+            width: 3rem;
+            height: 1.5rem;
+            background-color: #cbd5e1;
+            border-radius: 9999px;
+            transition: all 0.3s;
+        }
+        .toggle-checkbox:checked {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body class="bg-surface-main text-on-surface font-body-md min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col p-base gap-gutter bg-surface-main dark:bg-surface-dim w-[280px] h-screen fixed left-0 top-0 border-r border-border-subtle dark:border-outline-variant z-20">
+<div class="px-4 py-6">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">CashFlow Forecaster</h1>
+<p class="text-sm text-text-muted mt-1">Premium Business Banking</p>
+</div>
+<nav class="flex-1 flex flex-col gap-2 px-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">receipt_long</span>
+<span class="font-label-md text-label-md">Transactions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary dark:text-primary-fixed font-semibold bg-surface-container dark:bg-surface-container-high active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3">
+<img alt="User Profile" class="w-10 h-10 rounded-full object-cover border border-border-subtle" data-alt="A professional headshot of a business user in a modern office setting, soft natural lighting, high quality corporate portrait." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqqWv5J10zUkxIv0GDdNaAi98m9MJEBnwSlnIBaRfBM4QZ5jPe-mTVqcn6zVOud-lTH9iAspYVDpWiYTw_48z_lepGAEqaHDOZgsf_CtHIm7NoweSWiXkBqAuIClf9wtITwR9dmPREiEgSESf4WKQiy61aeB-g-awrlb9IQNfbZnsL17StHMnge90PPXq3zHzhHLtqE5sVo5kLx4Fp21bPQUH7WI9jHyRKkOsDrbXdVlHfKuMFYIq0OQ"/>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Alex Carter</p>
+<p class="text-xs text-text-muted">Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[280px] w-full min-h-screen">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-gutter w-full docked full-width top-0 h-16 bg-surface-main dark:bg-surface-dim border-b border-border-subtle dark:border-outline-variant z-10 sticky">
+<div class="md:hidden">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">CashFlow Forecaster</h1>
+</div>
+<div class="hidden md:block">
+<h2 class="font-headline-md text-headline-md text-on-surface">Settings</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant dark:text-outline hover:opacity-80 transition-all duration-300 rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-outline hover:opacity-80 transition-all duration-300 rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 p-margin-mobile md:p-gutter max-w-container-max mx-auto w-full">
+<div class="mb-10 mt-6">
+<h2 class="font-headline-lg text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-2">Budget &amp; Alert Settings</h2>
+<p class="font-body-md text-body-md text-text-muted max-w-2xl">Configure how CashFlow Forecaster monitors your spending and when it should notify you to help you stay within budget.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Global Settings -->
+<div class="lg:col-span-5 flex flex-col gap-8">
+<!-- Monthly Alert Threshold Card -->
+<div class="bg-surface-card rounded-xl border border-border-subtle p-6 shadow-[0_4px_20px_rgba(0,24,32,0.04)] hover:shadow-[0_8px_30px_rgba(0,24,32,0.08)] transition-shadow duration-300">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-warning-soft flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-[20px]">Monthly Alert Threshold</h3>
+</div>
+<p class="font-body-md text-body-md text-text-muted mb-6">Receive an immediate notification when your total spending for the current month exceeds this limit.</p>
+<div class="space-y-4">
+<label class="block font-label-md text-label-md text-on-surface" for="budget-limit">Global Spending Limit</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="text-text-muted font-body-lg text-body-lg">$</span>
+</div>
+<input class="pl-8 w-full bg-surface-main border border-border-subtle rounded-lg py-3 px-4 font-body-lg text-body-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" id="budget-limit" placeholder="50,000" type="number" value="75000"/>
+</div>
+<p class="text-xs text-text-muted mt-2">Current month spending: $42,350 (56% of limit)</p>
+</div>
+<div class="mt-8 pt-6 border-t border-border-subtle">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity">Save Threshold</button>
+</div>
+</div>
+<!-- Alert Delivery Methods -->
+<div class="bg-surface-card rounded-xl border border-border-subtle p-6 shadow-[0_4px_20px_rgba(0,24,32,0.04)]">
+<h3 class="font-headline-md text-headline-md text-on-surface text-[20px] mb-6">Delivery Methods</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Email Notifications</span>
+<span class="text-sm text-text-muted">Daily digests and critical alerts</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-email" name="toggle-email" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-email"></label>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Push Notifications</span>
+<span class="text-sm text-text-muted">Real-time mobile alerts</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-push" name="toggle-push" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-push"></label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Category Notifications List -->
+<div class="lg:col-span-7">
+<div class="bg-surface-card rounded-xl border border-border-subtle shadow-[0_4px_20px_rgba(0,24,32,0.04)] overflow-hidden">
+<div class="p-6 border-b border-border-subtle bg-surface-main">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">category</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-[20px]">Category Notifications</h3>
+</div>
+<p class="font-body-md text-body-md text-text-muted mt-2">Enable alerts for specific spending categories when unusually high transactions occur.</p>
+</div>
+<div class="divide-y divide-border-subtle">
+<!-- Category Row: Payroll -->
+<div class="p-4 sm:p-6 flex items-center justify-between hover:bg-surface-main transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Payroll</h4>
+<p class="text-sm text-text-muted">Salaries, bonuses, contractors</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-payroll" name="toggle-payroll" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-payroll"></label>
+</div>
+</div>
+<!-- Category Row: Rent -->
+<div class="p-4 sm:p-6 flex items-center justify-between hover:bg-surface-main transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-dim flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">domain</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Rent &amp; Lease</h4>
+<p class="text-sm text-text-muted">Office space, equipment leasing</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-rent" name="toggle-rent" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-rent"></label>
+</div>
+</div>
+<!-- Category Row: Utilities -->
+<div class="p-4 sm:p-6 flex items-center justify-between hover:bg-surface-main transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-dim flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Utilities</h4>
+<p class="text-sm text-text-muted">Power, water, internet services</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-utilities" name="toggle-utilities" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-utilities"></label>
+</div>
+</div>
+<!-- Category Row: Software -->
+<div class="p-4 sm:p-6 flex items-center justify-between hover:bg-surface-main transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined">computer</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Software &amp; SaaS</h4>
+<p class="text-sm text-text-muted">Cloud services, software subscriptions</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-software" name="toggle-software" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-software"></label>
+</div>
+</div>
+<!-- Category Row: Marketing -->
+<div class="p-4 sm:p-6 flex items-center justify-between hover:bg-surface-main transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-dim flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">campaign</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Marketing</h4>
+<p class="text-sm text-text-muted">Ads, promotions, agency fees</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-marketing" name="toggle-marketing" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-marketing"></label>
+</div>
+</div>
+<!-- Category Row: Travel -->
+<div class="p-4 sm:p-6 flex items-center justify-between hover:bg-surface-main transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined">flight</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Travel &amp; Expense</h4>
+<p class="text-sm text-text-muted">Flights, hotels, client meals</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-travel" name="toggle-travel" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-travel"></label>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+        // Simple logic to toggle checkbox appearance based on checked state
+        // CSS handles the actual animation, this is just to ensure initial state classes if needed beyond basic HTML
+        document.querySelectorAll('.toggle-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Additional JS logic for saving settings could go here
+                console.log(this.id + " changed to: " + this.checked);
+            });
+        });
+    </script>
+</body></html>

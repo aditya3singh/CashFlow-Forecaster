@@ -2,11 +2,12 @@
  * OnboardingPage — focused screen to connect a bank account.
  *
  * 3-step progress indicator, single CTA, trust text.
- * Simulates Plaid Link (backend is sandboxed).
+ * Uses real Plaid Link (react-plaid-link) instead of fake token.
  */
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePlaidLink } from 'react-plaid-link';
 import { Landmark, ArrowRight, RefreshCw, BarChart3, Shield } from 'lucide-react';
 import Button from '../components/Shared/Button';
 import { accountsAPI } from '../api/client';
@@ -20,34 +21,92 @@ const steps = [
 export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [linkToken, setLinkToken] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // ── Plaid Link success handler ──
+  const onPlaidSuccess = useCallback(
+    async (publicToken, metadata) => {
+      try {
+        // Step 2: Exchange public token
+        setCurrentStep(1);
+        const institutionName = metadata?.institution?.name || null;
+        const accountName =
+          metadata?.accounts?.[0]?.name ||
+          (metadata?.accounts?.[0]?.mask
+            ? `Account (...${metadata.accounts[0].mask})`
+            : null);
+
+        await accountsAPI.exchangeToken(
+          publicToken,
+          institutionName,
+          accountName
+        );
+
+        // Step 3: Done — redirect to dashboard
+        setCurrentStep(2);
+        setTimeout(() => navigate('/dashboard'), 1200);
+      } catch (err) {
+        console.error('Token exchange failed:', err);
+        setError(
+          err.response?.data?.message ||
+          'Could not complete bank connection. Please try again.'
+        );
+        setCurrentStep(0);
+        setLoading(false);
+      }
+    },
+    [navigate]
+  );
+
+  // ── Plaid Link configuration ──
+  const { open, ready } = usePlaidLink({
+    token: linkToken,
+    onSuccess: onPlaidSuccess,
+    onExit: (err) => {
+      if (err) {
+        console.error('Plaid Link exited with error:', err);
+        setError('Bank connection was interrupted. Please try again.');
+      }
+      setLoading(false);
+    },
+  });
+
+  // ── Handle Connect button click ──
   const handleConnect = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      // Step 1: Get link token (in production this opens Plaid Link)
+      // Step 1: Get link token
       setCurrentStep(0);
-      await accountsAPI.createLinkToken();
+      const res = await accountsAPI.createLinkToken();
+      const token = res.data.link_token;
+      setLinkToken(token);
 
-      // Simulate Plaid Link completion (sandbox mode)
-      setCurrentStep(1);
-      await accountsAPI.exchangeToken('public-sandbox-demo-token');
-
-      // Step 3: Done — redirect to dashboard
-      setCurrentStep(2);
-      setTimeout(() => navigate('/dashboard'), 1200);
+      // We need to wait for usePlaidLink to pick up the new token.
+      // Since usePlaidLink is reactive, we'll open it via useEffect-like
+      // pattern. But since the hook re-renders, we can open directly
+      // after a brief tick.
     } catch (err) {
-      console.warn('Onboarding API call failed (backend may not be running):', err.message);
-      // Still proceed to dashboard for demo purposes
-      setCurrentStep(2);
-      setTimeout(() => navigate('/dashboard'), 1200);
-    } finally {
+      console.error('Onboarding failed:', err.message);
+      setError(
+        err.response?.data?.message ||
+        'Could not connect to bank. Please check your connection and try again.'
+      );
+      setCurrentStep(0);
       setLoading(false);
     }
   };
+
+  // Auto-open Plaid Link once token is ready
+  // (usePlaidLink re-creates `open` when `token` changes)
+  // We use a useEffect-like approach by checking in render:
+  if (linkToken && ready && loading && currentStep === 0) {
+    // Open Plaid Link on next tick to avoid calling during render
+    setTimeout(() => open(), 0);
+  }
 
   return (
     <div className="onboarding-page">
@@ -105,12 +164,15 @@ export default function OnboardingPage() {
               anytime.
             </span>
           </div>
-        </div>
 
-        {/* Skip option */}
-        <button className="onboarding-skip" onClick={() => navigate('/dashboard')}>
-          Skip for now — explore with demo data
-        </button>
+          <button
+            type="button"
+            className="onboarding-skip"
+            onClick={() => navigate('/dashboard')}
+          >
+            Skip for now — I'll connect later
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Search &amp; Filter - CashFlow Forecaster</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#42484a",
+                    "tertiary-fixed": "#ffdbcd",
+                    "background": "#fbf9f4",
+                    "tertiary-container": "#4a1b04",
+                    "on-secondary-container": "#127256",
+                    "on-primary-container": "#7895a1",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-main": "#F9F7F2",
+                    "primary-container": "#0f2d37",
+                    "success-soft": "#E8F5EE",
+                    "surface-dim": "#dbdad5",
+                    "secondary-fixed": "#9ef4d0",
+                    "on-surface": "#1b1c19",
+                    "on-primary-fixed": "#001f28",
+                    "surface-container-high": "#eae8e3",
+                    "inverse-primary": "#aecbd8",
+                    "tertiary": "#2b0a00",
+                    "inverse-on-surface": "#f2f1ec",
+                    "primary": "#001820",
+                    "surface-tint": "#47626e",
+                    "error-container": "#ffdad6",
+                    "border-subtle": "#E5E1D8",
+                    "text-primary": "#1A1A1A",
+                    "primary-fixed": "#c9e7f4",
+                    "inverse-surface": "#30312e",
+                    "surface-container-highest": "#e4e2dd",
+                    "primary-fixed-dim": "#aecbd8",
+                    "secondary-container": "#9ef4d0",
+                    "on-tertiary-container": "#c77f60",
+                    "outline-variant": "#c2c7cb",
+                    "surface-container": "#f0eee9",
+                    "text-muted": "#606060",
+                    "on-background": "#1b1c19",
+                    "on-secondary": "#ffffff",
+                    "warning-soft": "#FDF2ED",
+                    "on-tertiary-fixed-variant": "#6f371e",
+                    "surface-variant": "#e4e2dd",
+                    "surface": "#fbf9f4",
+                    "on-secondary-fixed": "#002116",
+                    "surface-bright": "#fbf9f4",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "outline": "#72787b",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#360f00",
+                    "secondary": "#036c50",
+                    "surface-card": "#FFFFFF",
+                    "surface-container-low": "#f5f3ee",
+                    "on-secondary-fixed-variant": "#00513b",
+                    "secondary-fixed-dim": "#83d7b5",
+                    "on-primary-fixed-variant": "#2f4b55",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-desktop": "64px",
+                    "container-max": "1200px",
+                    "base": "8px",
+                    "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-price": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-xl": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "display-price": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: #F9F7F2; } /* surface-main */
+        /* Custom scrollbar for filter chips */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-surface-main text-on-surface font-body-lg min-h-screen flex flex-col md:flex-row antialiased">
+<!-- TopAppBar (Mobile & Desktop) -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-280px)] z-40 bg-surface/80 dark:bg-surface-container/80 backdrop-blur-md border-b border-border-subtle dark:border-outline-variant flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop transition-all">
+<!-- Mobile Logo/Title -->
+<div class="md:hidden flex items-center">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">CashFlow Forecaster</span>
+</div>
+<!-- Empty left side on desktop to balance -->
+<div class="hidden md:block flex-1"></div>
+<div class="flex items-center gap-gutter">
+<button class="p-2 text-primary dark:text-primary-fixed hover:text-secondary dark:hover:text-secondary-fixed transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-primary dark:text-primary-fixed hover:text-secondary dark:hover:text-secondary-fixed transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-border-subtle">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A clean, modern professional headshot of a person looking forward against a neutral light background, suitable for a corporate SaaS application profile avatar. The lighting is soft and even." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD26y_dVVtjNP5Bv3riLirTQhZe56b0OGIdyL85qPRRWGMft-7OYkNCNDWSaWLpeDoP-gsHcG-DZgo1K_xNgmN5hwcxxVzS4DOkxxUF2pZMOGwAd07qoie-5BbiZ6E5UIYP5pyZhy-E5gfIopmHdMlYeHeUk6NSSP-dDcxG0G1zxjoQ3_mgpDR5ip-dG3Tludz7_0lzrw5QgvpVMJ4F2urU4iwzx5p4prfWREegKgx-rMJ68pR_5PGig"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex fixed left-0 top-0 h-full w-[280px] bg-surface dark:bg-surface-container border-r border-border-subtle dark:border-outline-variant flex-col py-gutter px-6 z-50">
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-primary-container text-on-primary-container flex items-center justify-center font-headline-md font-bold">
+                    CF
+                </div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">CashFlow Forecaster</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Premium SMB Suite</p>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-secondary-container/10 dark:hover:bg-secondary-container/20 transition-colors font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined group-hover:opacity-80 transition-opacity" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Transactions is Active here, as it's a search/filter on transactions -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim font-bold bg-secondary-container/10 transition-colors font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined opacity-80 transition-opacity" data-icon="receipt_long">receipt_long</span>
+<span>Transactions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-secondary-container/10 dark:hover:bg-secondary-container/20 transition-colors font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined group-hover:opacity-80 transition-opacity" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<div class="mt-auto pt-6 border-t border-border-subtle">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 rounded-lg hover:opacity-90 transition-opacity font-bold">
+                Connect Bank
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-[280px] pt-24 px-margin-mobile md:px-margin-desktop pb-24 md:pb-12 max-w-container-max mx-auto w-full flex flex-col">
+<!-- Search Header Area -->
+<section class="mb-12">
+<h1 class="font-headline-xl text-headline-xl text-primary mb-6">Search Transactions</h1>
+<!-- Prominent Search Bar -->
+<div class="relative w-full mb-6">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-muted text-[28px]" data-icon="search">search</span>
+</div>
+<input class="block w-full pl-14 pr-4 py-4 md:py-5 border border-border-subtle rounded-[16px] bg-surface-card font-body-lg text-body-lg text-text-primary placeholder-text-muted focus:ring-0 focus:border-secondary transition-all shadow-[0_4px_20px_rgba(0,24,32,0.02)] focus:shadow-[0_8px_30px_rgba(0,24,32,0.04)]" placeholder="Search merchants, amounts, or dates..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+<button class="p-2 text-text-muted hover:text-primary transition-colors bg-surface-container rounded-full">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+</div>
+</div>
+<!-- Filter Chips (Horizontal Scroll) -->
+<div class="flex items-center gap-3 overflow-x-auto no-scrollbar pb-2 pt-1 -mx-margin-mobile px-margin-mobile md:mx-0 md:px-0">
+<button class="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle bg-surface-card hover:bg-surface-container-low transition-colors font-label-md text-label-md text-text-primary">
+                    Merchant
+                    <span class="material-symbols-outlined text-[18px] text-text-muted" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle bg-surface-card hover:bg-surface-container-low transition-colors font-label-md text-label-md text-text-primary">
+                    Amount Range
+                    <span class="material-symbols-outlined text-[18px] text-text-muted" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle bg-surface-card hover:bg-surface-container-low transition-colors font-label-md text-label-md text-text-primary">
+                    Date Range
+                    <span class="material-symbols-outlined text-[18px] text-text-muted" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle bg-surface-card hover:bg-surface-container-low transition-colors font-label-md text-label-md text-text-primary">
+                    Category
+                    <span class="material-symbols-outlined text-[18px] text-text-muted" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle bg-surface-card hover:bg-surface-container-low transition-colors font-label-md text-label-md text-text-primary">
+                    Status
+                    <span class="material-symbols-outlined text-[18px] text-text-muted" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full border border-dashed border-outline text-text-muted hover:text-primary hover:border-primary transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                    More Filters
+                </button>
+</div>
+</section>
+<!-- Main Area: Recent Searches -->
+<section class="flex-1 flex flex-col gap-4">
+<div class="flex items-center justify-between mb-2">
+<h2 class="font-headline-md text-headline-md text-primary">Recent Searches</h2>
+<button class="font-label-md text-label-md text-secondary hover:text-primary transition-colors bg-transparent border-none p-2 -mr-2">
+                    Clear all
+                </button>
+</div>
+<!-- Bento-style Grid for Recent Searches to elevate layout from a standard list -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Recent Search 1 -->
+<div class="group relative bg-surface-card border border-border-subtle rounded-[16px] p-5 shadow-[0_4px_20px_rgba(0,24,32,0.02)] hover:shadow-[0_8px_30px_rgba(0,24,32,0.06)] hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-text-muted group-hover:bg-secondary/10 group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<button class="text-text-muted hover:text-error opacity-0 group-hover:opacity-100 transition-opacity p-1">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] font-semibold text-text-primary mb-1">Whole Foods</h3>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container-low font-label-md text-[12px] text-text-muted">Merchant</span>
+</div>
+</div>
+</div>
+<!-- Recent Search 2 -->
+<div class="group relative bg-surface-card border border-border-subtle rounded-[16px] p-5 shadow-[0_4px_20px_rgba(0,24,32,0.02)] hover:shadow-[0_8px_30px_rgba(0,24,32,0.06)] hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-text-muted group-hover:bg-secondary/10 group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<button class="text-text-muted hover:text-error opacity-0 group-hover:opacity-100 transition-opacity p-1">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] font-semibold text-text-primary mb-1">Last 30 days</h3>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container-low font-label-md text-[12px] text-text-muted">Date Range</span>
+</div>
+</div>
+</div>
+<!-- Recent Search 3 -->
+<div class="group relative bg-surface-card border border-border-subtle rounded-[16px] p-5 shadow-[0_4px_20px_rgba(0,24,32,0.02)] hover:shadow-[0_8px_30px_rgba(0,24,32,0.06)] hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-text-muted group-hover:bg-secondary/10 group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<button class="text-text-muted hover:text-error opacity-0 group-hover:opacity-100 transition-opacity p-1">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] font-semibold text-text-primary mb-1">&gt; $1000</h3>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container-low font-label-md text-[12px] text-text-muted">Amount</span>
+<span class="inline-flex items-center px-2 py-1 rounded bg-warning-soft text-on-tertiary-fixed-variant font-label-md text-[12px]">Outflow</span>
+</div>
+</div>
+</div>
+<!-- Recent Search 4 -->
+<div class="group relative bg-surface-card border border-border-subtle rounded-[16px] p-5 shadow-[0_4px_20px_rgba(0,24,32,0.02)] hover:shadow-[0_8px_30px_rgba(0,24,32,0.06)] hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-text-muted group-hover:bg-secondary/10 group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<button class="text-text-muted hover:text-error opacity-0 group-hover:opacity-100 transition-opacity p-1">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] font-semibold text-text-primary mb-1">Software Subscriptions</h3>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container-low font-label-md text-[12px] text-text-muted">Category</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Fixed Action Area -->
+<div class="fixed bottom-0 left-0 right-0 md:left-[280px] p-margin-mobile md:p-margin-desktop bg-gradient-to-t from-surface-main via-surface-main/90 to-transparent pointer-events-none flex justify-center md:justify-end">
+<button class="pointer-events-auto bg-secondary text-on-secondary font-label-md text-label-md px-8 py-4 rounded-[16px] shadow-[0_8px_30px_rgba(3,108,80,0.15)] hover:shadow-[0_12px_40px_rgba(3,108,80,0.2)] hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                Apply Filters
+                <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transaction Details Overlay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed-variant": "#00513b",
+                        "on-surface-variant": "#42484a",
+                        "surface-container-low": "#f5f3ee",
+                        "surface-dim": "#dbdad5",
+                        "primary-container": "#0f2d37",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-tint": "#47626e",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#fbf9f4",
+                        "secondary-container": "#9ef4d0",
+                        "primary-fixed-dim": "#aecbd8",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001f28",
+                        "success-soft": "#E8F5EE",
+                        "background": "#fbf9f4",
+                        "primary": "#001820",
+                        "surface-container": "#f0eee9",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c2c7cb",
+                        "on-surface": "#1b1c19",
+                        "surface-container-lowest": "#ffffff",
+                        "border-subtle": "#E5E1D8",
+                        "outline": "#72787b",
+                        "inverse-primary": "#aecbd8",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed": "#ffdbcd",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-container": "#c77f60",
+                        "on-tertiary-fixed-variant": "#6f371e",
+                        "secondary-fixed-dim": "#83d7b5",
+                        "surface-container-high": "#eae8e3",
+                        "surface-container-highest": "#e4e2dd",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "text-primary": "#1A1A1A",
+                        "tertiary": "#2b0a00",
+                        "on-secondary-fixed": "#002116",
+                        "on-background": "#1b1c19",
+                        "on-secondary-container": "#127256",
+                        "secondary": "#036c50",
+                        "on-primary-container": "#7895a1",
+                        "surface": "#fbf9f4",
+                        "surface-card": "#FFFFFF",
+                        "surface-variant": "#e4e2dd",
+                        "text-muted": "#606060",
+                        "inverse-surface": "#30312e",
+                        "on-primary-fixed-variant": "#2f4b55",
+                        "tertiary-container": "#4a1b04",
+                        "surface-main": "#F9F7F2",
+                        "secondary-fixed": "#9ef4d0",
+                        "on-primary": "#ffffff",
+                        "warning-soft": "#FDF2ED",
+                        "primary-fixed": "#c9e7f4"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        "margin-mobile": "20px",
+                        "container-max": "1200px",
+                        "base": "8px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px"
+                    },
+                    fontFamily: {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "display-price": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "headline-xl": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "display-price": ["48px", { lineHeight: "56px", letterSpacing: "-0.03em", fontWeight: "700" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }]
+                    },
+                    boxShadow: {
+                        'soft': '0px 4px 20px rgba(0, 24, 32, 0.04)',
+                        'hover': '0px 8px 30px rgba(0, 24, 32, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .slide-in {
+            animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="bg-surface-main min-h-screen text-on-surface font-body-md antialiased overflow-hidden">
+<!-- Mock Main Screen Content (Dimmed) -->
+<div class="h-screen w-full flex">
+<!-- Side Navigation (Suppressed for this view as per instructions, or mocked if needed. Using basic mock to show context) -->
+<nav class="w-[280px] h-screen fixed left-0 top-0 bg-surface-main border-r border-border-subtle flex flex-col p-gutter hidden md:flex opacity-50 transition-opacity">
+<div class="font-headline-md text-headline-md font-bold text-primary mb-12">CashFlow<br/><span class="text-on-surface-variant font-body-md text-body-md font-normal">Forecaster</span></div>
+<ul class="space-y-4">
+<li class="flex items-center gap-3 text-on-surface-variant p-2 rounded-lg"><span class="material-symbols-outlined">dashboard</span> Dashboard</li>
+<li class="flex items-center gap-3 text-secondary font-semibold p-2 rounded-lg bg-surface-container-high"><span class="material-symbols-outlined">swap_horiz</span> Transactions</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-0 md:ml-[280px] w-full md:w-[calc(100%-280px)] p-margin-desktop opacity-50 transition-opacity">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-8">Transactions</h1>
+<!-- Mock Table -->
+<div class="bg-surface-card rounded-xl border border-border-subtle p-6 shadow-soft">
+<div class="h-12 border-b border-border-subtle flex items-center justify-between"><div class="w-1/4 h-4 bg-surface-dim rounded"></div><div class="w-1/4 h-4 bg-surface-dim rounded"></div></div>
+<div class="h-16 border-b border-border-subtle flex items-center justify-between"><div class="w-1/3 h-4 bg-surface-container-high rounded"></div><div class="w-1/6 h-4 bg-surface-container-high rounded"></div></div>
+<div class="h-16 flex items-center justify-between"><div class="w-1/4 h-4 bg-surface-container-high rounded"></div><div class="w-1/5 h-4 bg-surface-container-high rounded"></div></div>
+</div>
+</main>
+</div>
+<!-- Overlay Background (Dimming) -->
+<div class="fixed inset-0 bg-primary/20 backdrop-blur-[2px] z-40" id="overlay-backdrop"></div>
+<!-- Side Panel Overlay -->
+<div class="fixed top-0 right-0 h-full w-full max-w-[480px] bg-surface-card shadow-[-8px_0_30px_rgba(0,24,32,0.08)] z-50 slide-in flex flex-col border-l border-border-subtle" id="side-panel">
+<!-- Header Actions -->
+<div class="flex items-center justify-between px-6 py-4 border-b border-border-subtle">
+<button aria-label="Close panel" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant" onclick="closePanel()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+<div class="flex gap-2">
+<button aria-label="Share" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<!-- Hero Section -->
+<div class="flex flex-col items-center text-center mb-12">
+<div class="w-20 h-20 bg-surface-container-low rounded-full flex items-center justify-center mb-6 shadow-soft border border-border-subtle">
+<span class="material-symbols-outlined text-[40px] text-primary" style="font-variation-settings: 'FILL' 1;">local_cafe</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Blue Bottle Coffee</h2>
+<div class="font-display-price text-display-price text-primary mb-4">-$6.50</div>
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-success-soft text-secondary font-label-md text-label-md gap-1.5">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                    Completed
+                </div>
+</div>
+<!-- Metadata List -->
+<div class="space-y-6">
+<div class="flex flex-col gap-1 pb-6 border-b border-border-subtle">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Date</span>
+<span class="font-body-lg text-body-lg text-primary">Oct 24, 2024</span>
+</div>
+<div class="flex flex-col gap-1 pb-6 border-b border-border-subtle">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Category</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">restaurant</span>
+<span class="font-body-lg text-body-lg text-primary">Dining</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 pb-6 border-b border-border-subtle">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Payment Method</span>
+<div class="flex items-center gap-3">
+<div class="w-10 h-6 bg-surface-dim rounded flex items-center justify-center border border-border-subtle">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">account_balance</span>
+</div>
+<span class="font-body-lg text-body-lg text-primary">Chase Checking (•••• 1234)</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 pb-6 border-b border-border-subtle">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Transaction ID</span>
+<div class="flex items-center justify-between">
+<span class="font-body-lg text-body-lg text-primary font-mono text-[16px]">TXN_8829341</span>
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Map Placeholder -->
+<div class="mt-8 rounded-xl overflow-hidden border border-border-subtle h-48 relative bg-surface-container-low shadow-soft">
+<img class="w-full h-full object-cover" data-alt="A detailed, modern map interface showing a minimalist street view centered on a coffee shop location in San Francisco. The map uses a light-mode color palette with soft off-whites, subtle gray roads, and a single deep teal marker indicating the transaction location. The overall aesthetic is clean, professional, and slightly abstracted, fitting a premium fintech application." data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt-oK2qFk-69Mxs8ssVnSvlwW4Ox_y8_o08obEiUtgqueQ_S4guz-Z4ut3Y7LH5LxcPSnCZfGOgMd9dqGxAblS3g6W6ZvBN9VU-MC0s-JZiomS8uXe1Q8_zaNcuxNph1sE3dQLzs89wuIvV4J09oVw-MqtoK5zcsxTVPTU2f5gHtxIVQ8bAaXYNTu6bt9hjR3zHahj8TjPNFMLC-6k3_eV8SIkXqVdad-P7JW7jIjOLsJLyAME-myKBQ"/>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="p-6 border-t border-border-subtle bg-surface-bright mt-auto">
+<button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg border border-border-subtle text-primary font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">flag</span>
+                Report Issue
+            </button>
+</div>
+</div>
+<script>
+        function closePanel() {
+            const panel = document.getElementById('side-panel');
+            const backdrop = document.getElementById('overlay-backdrop');
+            
+            panel.style.transform = 'translateX(100%)';
+            panel.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            backdrop.style.opacity = '0';
+            backdrop.style.transition = 'opacity 0.3s ease';
+
+            setTimeout(() => {
+                panel.style.display = 'none';
+                backdrop.style.display = 'none';
+            }, 300);
+        }
+    </script>
+</body></html>

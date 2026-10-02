@@ -54,8 +54,12 @@ export const authAPI = {
 // ── Accounts ──
 export const accountsAPI = {
   createLinkToken: () => client.post('/accounts/link-token'),
-  exchangeToken: (publicToken) =>
-    client.post('/accounts/exchange-token', { public_token: publicToken }),
+  exchangeToken: (publicToken, institutionName, accountName) =>
+    client.post('/accounts/exchange-token', {
+      public_token: publicToken,
+      institution_name: institutionName,
+      account_name: accountName,
+    }),
   listAccounts: () => client.get('/accounts/'),
 };
 
@@ -73,6 +77,18 @@ export const forecastAPI = {
 // ── Alerts ──
 export const alertsAPI = {
   list: (params) => client.get('/alerts/', { params }),
+};
+
+// ── Payment Methods ──
+export const paymentMethodsAPI = {
+  addCard: (data) => client.post('/payments/methods/card', data),
+  addUPI: (data) => client.post('/payments/methods/upi', data),
+  addBankAccount: (data) => client.post('/payments/methods/bank-account', data),
+  listMethods: () => client.get('/payments/methods/'),
+  setDefault: (id) => client.put(`/payments/methods/${id}/default`),
+  toggleAutoPay: (id, enabled) =>
+    client.put(`/payments/methods/${id}/auto-pay`, { enabled }),
+  deleteMethod: (id) => client.delete(`/payments/methods/${id}`),
 };
 
 // ── Health ──

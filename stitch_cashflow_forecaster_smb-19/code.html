@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CashFlow Forecaster - Know Your Cash Flow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-surface-variant": "#42484a",
+                "on-error-container": "#93000a",
+                "secondary": "#036c50",
+                "on-tertiary-fixed": "#360f00",
+                "on-tertiary": "#ffffff",
+                "on-error": "#ffffff",
+                "surface-variant": "#e4e2dd",
+                "surface-dim": "#dbdad5",
+                "tertiary-fixed-dim": "#ffb596",
+                "primary-container": "#0f2d37",
+                "warning-soft": "#FDF2ED",
+                "secondary-fixed": "#9ef4d0",
+                "on-tertiary-container": "#c77f60",
+                "primary-fixed-dim": "#aecbd8",
+                "tertiary-fixed": "#ffdbcd",
+                "on-secondary": "#ffffff",
+                "outline-variant": "#c2c7cb",
+                "surface-container-lowest": "#ffffff",
+                "surface-card": "#FFFFFF",
+                "on-secondary-container": "#127256",
+                "inverse-on-surface": "#f2f1ec",
+                "on-primary": "#ffffff",
+                "on-surface": "#1b1c19",
+                "surface-container-high": "#eae8e3",
+                "inverse-surface": "#30312e",
+                "error": "#ba1a1a",
+                "surface-bright": "#fbf9f4",
+                "secondary-fixed-dim": "#83d7b5",
+                "error-container": "#ffdad6",
+                "tertiary-container": "#4a1b04",
+                "surface-tint": "#47626e",
+                "on-primary-fixed-variant": "#2f4b55",
+                "tertiary": "#2b0a00",
+                "primary-fixed": "#c9e7f4",
+                "outline": "#72787b",
+                "secondary-container": "#9ef4d0",
+                "on-primary-container": "#7895a1",
+                "surface-container": "#f0eee9",
+                "on-secondary-fixed-variant": "#00513b",
+                "surface-container-highest": "#e4e2dd",
+                "on-secondary-fixed": "#002116",
+                "on-tertiary-fixed-variant": "#6f371e",
+                "surface": "#fbf9f4",
+                "success-soft": "#E8F5EE",
+                "background": "#fbf9f4",
+                "text-primary": "#1A1A1A",
+                "inverse-primary": "#aecbd8",
+                "on-primary-fixed": "#001f28",
+                "text-muted": "#606060",
+                "on-background": "#1b1c19",
+                "surface-main": "#F9F7F2",
+                "surface-container-low": "#f5f3ee",
+                "primary": "#001820",
+                "border-subtle": "#E5E1D8"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "base": "8px",
+                "container-max": "1200px",
+                "margin-mobile": "20px",
+                "margin-desktop": "64px",
+                "gutter": "24px"
+        },
+        "fontFamily": {
+                "headline-lg-mobile": [
+                        "Plus Jakarta Sans"
+                ],
+                "label-md": [
+                        "Inter"
+                ],
+                "headline-xl": [
+                        "Plus Jakarta Sans"
+                ],
+                "display-price": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-md": [
+                        "Plus Jakarta Sans"
+                ]
+        },
+        "fontSize": {
+                "headline-lg-mobile": [
+                        "28px",
+                        {
+                                "lineHeight": "36px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-xl": [
+                        "40px",
+                        {
+                                "lineHeight": "48px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-price": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.03em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        /* Ambient depth utilities */
+        .shadow-ambient {
+            box-shadow: 0px 4px 20px rgba(0, 24, 32, 0.04);
+        }
+        .shadow-ambient-hover:hover {
+            box-shadow: 0px 8px 30px rgba(0, 24, 32, 0.08);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md antialiased relative overflow-x-hidden">
+<!-- Decorative Ambient Background -->
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-fixed-dim/20 rounded-full blur-[120px] -z-10 pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+<div class="absolute top-[40%] left-0 w-[400px] h-[400px] bg-secondary-fixed/10 rounded-full blur-[100px] -z-10 pointer-events-none -translate-x-1/2"></div>
+<!-- Minimal Landing Page Header (App shell suppressed for landing context) -->
+<header class="w-full relative z-10">
+<div class="max-w-container-max mx-auto px-gutter md:px-margin-desktop py-6 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">CashFlow Forecaster</span>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Log in</a>
+<a class="bg-primary text-on-primary px-5 py-2.5 rounded-DEFAULT font-label-md text-label-md hover:bg-primary/90 transition-colors shadow-sm" href="#">Start Free Trial</a>
+</nav>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="w-full max-w-container-max mx-auto px-gutter md:px-margin-desktop pt-16 md:pt-24 pb-20 md:pb-32 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+<!-- Left: Copy & CTA -->
+<div class="flex-1 flex flex-col items-start gap-6 relative z-10">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-xl md:text-headline-xl text-primary text-balance leading-tight">
+                    Know your cash flow before it's a problem.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                    Predict your bank balance 2-6 weeks ahead. Transform financial anxiety into clear, actionable foresight and stay ahead of shortfalls effortlessly.
+                </p>
+<div class="mt-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center w-full sm:w-auto">
+<button class="w-full sm:w-auto bg-primary text-on-primary px-8 py-4 rounded-lg font-label-md text-label-md shadow-ambient hover:bg-primary/90 transition-all duration-200">
+                        Connect your bank — it's free to try
+                    </button>
+</div>
+<div class="flex items-center gap-3 mt-6 text-text-muted font-body-md text-body-md text-sm">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span>Bank-level encryption. Read-only access.</span>
+</div>
+</div>
+<!-- Right: Visual -->
+<div class="flex-1 w-full max-w-2xl lg:max-w-none relative z-10">
+<div class="relative w-full aspect-[4/3] rounded-xl bg-surface-card shadow-ambient border border-border-subtle overflow-hidden flex items-center justify-center p-2">
+<img alt="Financial forecast chart preview" class="w-full h-full object-cover rounded-lg" data-alt="A highly stylized, premium digital illustration representing a financial forecast dashboard. The composition features a sleek, minimalist line graph curving smoothly upwards across a warm, off-white background canvas. The primary forecast line is rendered in a deep, sophisticated teal color. Beneath the crisp line, a subtle, translucent mint gradient adds a sense of depth and volume to the projected data flow. The lighting is soft, diffused, and ambient, casting delicate shadows that give the minimal interface elements a modern, tactile, three-dimensional quality characteristic of high-end fintech design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMa5BWdk3vWRmE998hDhIOlJyC9RUJDm_E3YKLAHTZ0MptB1dn6bbu-IQxtBm8bjdMEbR2Ia6qMcSNwFqzskeIlE794TuMBjwnLjJ23C1dYDjWClxFMEY7fumYjW4TFVQbgsx42yEUcVcMz4y--wtkzV47Uul4Z_fLWpx5vclEA5ZykPCuddb7Si7_Qb_qde7GJioTsLL-jcf4WlGsFQ9DBHRumvKrYlWM1iSbhUCwzpbiLYUQ9acA9w"/>
+<!-- Decorative floating element -->
+<div class="absolute -bottom-6 -left-6 bg-surface-card border border-border-subtle rounded-lg p-4 shadow-ambient hidden md:flex items-center gap-3 animate-pulse" style="animation-duration: 4s;">
+<div class="w-10 h-10 rounded-full bg-success-soft flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-text-muted text-xs">Projected Low</p>
+<p class="font-headline-md text-headline-md text-primary text-lg">+$4,250</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="w-full bg-surface-container-lowest py-24 border-y border-border-subtle relative z-10">
+<div class="max-w-container-max mx-auto px-gutter md:px-margin-desktop">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Clarity over complexity</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">The tools you need to feel confident about your runway, designed to stay out of your way.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Feature 1: Large Span -->
+<div class="md:col-span-7 bg-surface-card rounded-xl border border-border-subtle p-8 lg:p-10 shadow-ambient shadow-ambient-hover transition-all duration-300 flex flex-col group overflow-hidden relative min-h-[360px]">
+<div class="relative z-10">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary">visibility</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">See your future balance</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+                                We analyze your recurring transactions and project your balance up to 6 weeks into the future. No spreadsheets required.
+                            </p>
+</div>
+<!-- Stylized internal visual -->
+<div class="absolute -bottom-10 -right-10 w-[80%] h-[60%] rounded-tl-xl border-t border-l border-border-subtle bg-surface-container-low/50 overflow-hidden opacity-50 group-hover:opacity-100 transition-opacity duration-500">
+<img alt="Future balance interface preview" class="w-full h-full object-cover object-left-top" data-alt="A macro detail shot of a clean, light-mode user interface showing a calendar and a line chart intersecting. The background is a crisp white. A soft mint green line arcs smoothly across a grid pattern. Subtle typography indicates dates and currency values in a modern sans-serif font. The image has a shallow depth of field, emphasizing the intersection point of the data line, highlighting the concept of precise future forecasting in a calm, professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9rKnXAgT_n1Z_3FSkRVMihnwgKgFbdkTF8vhMegiNogrJpsLJ1D39BfCrint2FDt7_ENKYgB-fEwp-2IBvnMxuUpInRAXT0AgxoxmZxPScV3nKIJy6YnzlcS1Smr551e-VPMD6hifcDy5e5ma-7b-5pJpGTscqDkACGpg0l4_Dl1qnLL3EayiRMsUsZT7TbbnYvgONYWV8blnWIRKYZt2e2rSj9xJ9Ed71wTWtKnOg9EhqS5ZA07Xag"/>
+</div>
+</div>
+<!-- Stacked Features Column -->
+<div class="md:col-span-5 flex flex-col gap-6">
+<!-- Feature 2 -->
+<div class="bg-surface-card rounded-xl border border-border-subtle p-8 shadow-ambient shadow-ambient-hover transition-all duration-300 flex-1 flex flex-col justify-center relative overflow-hidden group">
+<div class="relative z-10">
+<div class="w-10 h-10 rounded-lg bg-warning-soft flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-on-tertiary-container">notifications_active</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-lg text-primary mb-2">Get alerted before you're short</h3>
+<p class="font-body-md text-body-md text-sm text-on-surface-variant">
+                                    Our system spots potential shortfalls early, giving you time to move funds or delay an expense.
+                                </p>
+</div>
+<!-- Decorative ambient glow on hover -->
+<div class="absolute inset-0 bg-gradient-to-br from-warning-soft/0 to-warning-soft/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-card rounded-xl border border-border-subtle p-8 shadow-ambient shadow-ambient-hover transition-all duration-300 flex-1 flex flex-col justify-center relative overflow-hidden group">
+<div class="relative z-10">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary">edit_note</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-lg text-primary mb-2">Add expected income manually</h3>
+<p class="font-body-md text-body-md text-sm text-on-surface-variant">
+                                    Waiting on a check or an invoice? Manually inject expected cash flows into your timeline to see the full picture.
+                                </p>
+</div>
+<!-- Decorative manual entry pill mockup -->
+<div class="absolute right-4 bottom-4 px-3 py-1 bg-surface-dim border border-border-subtle rounded-full hidden sm:flex items-center gap-1 opacity-40 group-hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span class="font-label-md text-label-md text-[10px]">Manual Entry</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Minimal Footer -->
+<footer class="w-full bg-surface py-12 border-t border-border-subtle">
+<div class="max-w-container-max mx-auto px-gutter md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+<span class="font-headline-md text-headline-md text-sm">CashFlow Forecaster</span>
+</div>
+<div class="flex gap-6 text-text-muted font-body-md text-body-md text-sm">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<p class="text-text-muted font-body-md text-body-md text-xs">
+                © 2024 CashFlow Forecaster. All rights reserved.
+            </p>
+</div>
+</footer>
+</body></html>

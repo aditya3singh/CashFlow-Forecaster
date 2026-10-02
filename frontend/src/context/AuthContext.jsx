@@ -15,8 +15,6 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const isAuthenticated = !!localStorage.getItem('access_token');
-
   // Load user profile on mount if token exists
   useEffect(() => {
     const loadUser = async () => {
@@ -57,7 +55,12 @@ export function AuthProvider({ children }) {
       setUser(meResponse.data);
       return { success: true };
     } catch (err) {
-      const message = err.response?.data?.message || 'Signup failed. Please try again.';
+      const message =
+        err.response?.data?.message ||
+        err.response?.data?.detail ||
+        (err.code === 'ERR_NETWORK'
+          ? 'Unable to reach the server. Please make sure the backend is running.'
+          : 'Signup failed. Please try again.');
       setError(message);
       return { success: false, message };
     }
@@ -76,7 +79,12 @@ export function AuthProvider({ children }) {
       setUser(meResponse.data);
       return { success: true };
     } catch (err) {
-      const message = err.response?.data?.message || 'Invalid email or password.';
+      const message =
+        err.response?.data?.message ||
+        err.response?.data?.detail ||
+        (err.code === 'ERR_NETWORK'
+          ? 'Unable to reach the server. Please make sure the backend is running.'
+          : 'Invalid email or password.');
       setError(message);
       return { success: false, message };
     }

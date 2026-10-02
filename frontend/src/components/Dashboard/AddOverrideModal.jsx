@@ -5,7 +5,7 @@
  */
 
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, CheckCircle } from 'lucide-react';
 import Button from '../Shared/Button';
 import { transactionsAPI } from '../../api/client';
 
@@ -16,11 +16,7 @@ export default function AddOverrideModal({ bankAccountId, onClose, onSuccess }) 
   const [expectedDate, setExpectedDate] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // Set min date to tomorrow
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const minDate = tomorrow.toISOString().split('T')[0];
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,10 +41,17 @@ export default function AddOverrideModal({ bankAccountId, onClose, onSuccess }) 
         expected_date: expectedDate,
         bank_account_id: bankAccountId,
       });
-      onSuccess?.();
-      onClose();
+      setSuccess(true);
+      setTimeout(() => {
+        onSuccess?.();
+        onClose();
+      }, 800);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to create override.');
+      setError(
+        err.response?.data?.message ||
+        err.response?.data?.detail ||
+        'Failed to create transaction. Please try again.'
+      );
     } finally {
       setLoading(false);
     }
@@ -64,89 +67,95 @@ export default function AddOverrideModal({ bankAccountId, onClose, onSuccess }) 
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="override-form">
-          {/* Type toggle */}
-          <div className="override-type-toggle">
-            <button
-              type="button"
-              className={`override-type-btn ${type === 'expense' ? 'active' : ''}`}
-              onClick={() => setType('expense')}
-            >
-              Expense
-            </button>
-            <button
-              type="button"
-              className={`override-type-btn ${type === 'income' ? 'active' : ''}`}
-              onClick={() => setType('income')}
-            >
-              Income
-            </button>
+        {success ? (
+          <div className="override-success">
+            <CheckCircle size={48} className="override-success-icon" />
+            <p className="override-success-text">Transaction added successfully!</p>
           </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="override-form">
+            {/* Type toggle */}
+            <div className="override-type-toggle">
+              <button
+                type="button"
+                className={`override-type-btn ${type === 'expense' ? 'active' : ''}`}
+                onClick={() => setType('expense')}
+              >
+                Expense
+              </button>
+              <button
+                type="button"
+                className={`override-type-btn ${type === 'income' ? 'active' : ''}`}
+                onClick={() => setType('income')}
+              >
+                Income
+              </button>
+            </div>
 
-          {/* Description */}
-          <div className="form-group">
-            <label className="form-label" htmlFor="override-description">
-              Description
-            </label>
-            <input
-              id="override-description"
-              type="text"
-              className="form-input"
-              placeholder="e.g., Invoice #204 due"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-
-          {/* Amount */}
-          <div className="form-group">
-            <label className="form-label" htmlFor="override-amount">
-              Amount *
-            </label>
-            <div className="input-with-prefix">
-              <span className="input-prefix">$</span>
+            {/* Description */}
+            <div className="form-group">
+              <label className="form-label" htmlFor="override-description">
+                Description
+              </label>
               <input
-                id="override-amount"
-                type="number"
-                className="form-input input-prefixed"
-                placeholder="0.00"
-                min="0.01"
-                step="0.01"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                required
+                id="override-description"
+                type="text"
+                className="form-input"
+                placeholder="e.g., Invoice #204D"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-          </div>
 
-          {/* Date */}
-          <div className="form-group">
-            <label className="form-label" htmlFor="override-date">
-              Expected Date *
-            </label>
-            <input
-              id="override-date"
-              type="date"
-              className="form-input"
-              min={minDate}
-              value={expectedDate}
-              onChange={(e) => setExpectedDate(e.target.value)}
-              required
-            />
-            <span className="form-hint">Must be a future date</span>
-          </div>
+            {/* Amount */}
+            <div className="form-group">
+              <label className="form-label" htmlFor="override-amount">
+                Amount *
+              </label>
+              <div className="input-with-prefix">
+                <span className="input-prefix">$</span>
+                <input
+                  id="override-amount"
+                  type="number"
+                  className="form-input input-prefixed"
+                  placeholder="0.00"
+                  min="0.01"
+                  step="0.01"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
 
-          {error && <p className="form-error">{error}</p>}
+            {/* Date */}
+            <div className="form-group">
+              <label className="form-label" htmlFor="override-date">
+                Date *
+              </label>
+              <input
+                id="override-date"
+                type="date"
+                className="form-input"
+                value={expectedDate}
+                onChange={(e) => setExpectedDate(e.target.value)}
+                required
+              />
+              <span className="form-hint">Can be a past, current, or future date</span>
+            </div>
 
-          <div className="override-actions">
-            <Button variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button variant="primary" type="submit" loading={loading}>
-              {type === 'income' ? 'Add Income' : 'Add Expense'}
-            </Button>
-          </div>
-        </form>
+            {error && <p className="form-error">{error}</p>}
+
+            <div className="override-actions">
+              <Button variant="secondary" onClick={onClose} type="button">
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit" loading={loading}>
+                {type === 'income' ? 'Add Income' : 'Add Expense'}
+              </Button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

@@ -29,9 +29,11 @@ class Settings(BaseSettings):
     PLAID_SECRET: str = ""
     PLAID_ENV: str = "sandbox"
 
-    # ── SendGrid (stubbed) ──
-    SENDGRID_API_KEY: str = ""
-    SENDGRID_FROM_EMAIL: str = "alerts@cashflowforecaster.com"
+    # ── SMTP (Gmail) ──
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_EMAIL: str = ""
+    SMTP_PASSWORD: str = ""
 
     # ── Redis ──
     REDIS_URL: str = "redis://localhost:6379"

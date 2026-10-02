@@ -4,7 +4,8 @@
  * Large, bold balance number with bank name and last sync time.
  */
 
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Landmark, ArrowRight } from 'lucide-react';
+import Button from '../Shared/Button';
 
 function formatCurrency(amount) {
   return new Intl.NumberFormat('en-US', {
@@ -28,7 +29,7 @@ function formatRelativeTime(dateStr) {
   return `${diffDays}d ago`;
 }
 
-export default function BalanceCard({ balance, bankName, lastSynced, loading }) {
+export default function BalanceCard({ balance, bankName, lastSynced, loading, onConnectBank }) {
   if (loading) {
     return (
       <div className="card balance-card">
@@ -39,10 +40,34 @@ export default function BalanceCard({ balance, bankName, lastSynced, loading }) 
     );
   }
 
+  if (balance == null) {
+    return (
+      <div className="card balance-card balance-card-empty">
+        <div className="balance-header-row">
+          <span className="balance-label">CURRENT BALANCE</span>
+          {onConnectBank && (
+            <button className="balance-connect-link" onClick={onConnectBank}>
+              <Landmark size={14} />
+              Connect Bank
+            </button>
+          )}
+        </div>
+        <h2 className="balance-amount" style={{ color: 'var(--color-text-muted)', fontSize: '1.75rem', margin: '0.25rem 0' }}>
+          $0.00
+        </h2>
+        <div className="balance-meta">
+          <span className="balance-bank" style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)' }}>
+            No bank linked yet · Tap to connect
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="card balance-card">
-      <span className="balance-label">Current balance</span>
-      <h2 className="balance-amount">{formatCurrency(balance ?? 0)}</h2>
+      <span className="balance-label">CURRENT BALANCE</span>
+      <h2 className="balance-amount">{formatCurrency(balance)}</h2>
       <div className="balance-meta">
         {bankName && <span className="balance-bank">{bankName}</span>}
         {lastSynced && (

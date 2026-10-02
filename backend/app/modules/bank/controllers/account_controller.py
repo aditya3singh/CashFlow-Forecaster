@@ -66,6 +66,8 @@ def exchange_token(
         db=db,
         user_id=current_user["user_id"],
         public_token=request.public_token,
+        institution_name=request.institution_name,
+        account_name=request.account_name,
     )
 
 

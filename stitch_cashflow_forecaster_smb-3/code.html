@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spending Insights - CashFlow Forecaster</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fbf9f4",
+                        "surface-variant": "#e4e2dd",
+                        "surface-container-high": "#eae8e3",
+                        "surface-main": "#F9F7F2",
+                        "surface-container": "#f0eee9",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-card": "#FFFFFF",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#c9e7f4",
+                        "outline-variant": "#c2c7cb",
+                        "on-secondary-fixed-variant": "#00513b",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dbdad5",
+                        "on-secondary": "#ffffff",
+                        "border-subtle": "#E5E1D8",
+                        "outline": "#72787b",
+                        "surface-container-highest": "#e4e2dd",
+                        "inverse-primary": "#aecbd8",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-background": "#1b1c19",
+                        "on-primary-fixed-variant": "#2f4b55",
+                        "on-surface-variant": "#42484a",
+                        "tertiary": "#2b0a00",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary": "#ffffff",
+                        "warning-soft": "#FDF2ED",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary-fixed-variant": "#6f371e",
+                        "primary-fixed-dim": "#aecbd8",
+                        "on-tertiary-container": "#c77f60",
+                        "secondary-fixed": "#9ef4d0",
+                        "success-soft": "#E8F5EE",
+                        "on-secondary-fixed": "#002116",
+                        "secondary-fixed-dim": "#83d7b5",
+                        "text-muted": "#606060",
+                        "secondary-container": "#9ef4d0",
+                        "secondary": "#036c50",
+                        "surface": "#fbf9f4",
+                        "on-primary-fixed": "#001f28",
+                        "surface-tint": "#47626e",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#4a1b04",
+                        "on-secondary-container": "#127256",
+                        "primary": "#001820",
+                        "text-primary": "#1A1A1A",
+                        "on-primary-container": "#7895a1",
+                        "surface-container-low": "#f5f3ee",
+                        "primary-container": "#0f2d37",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "background": "#fbf9f4",
+                        "inverse-surface": "#30312e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "container-max": "1200px",
+                        "base": "8px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-price": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "display-price": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .shadow-soft {
+            box-shadow: 0px 4px 20px rgba(0, 24, 32, 0.04);
+        }
+        .donut-segment {
+            transition: stroke-width 0.3s ease;
+        }
+        .donut-segment:hover {
+            stroke-width: 32;
+        }
+    </style>
+</head>
+<body class="bg-surface-main text-text-primary antialiased font-body-md h-screen flex overflow-hidden">
+<!-- SideNavBar Component -->
+<nav class="hidden md:flex flex-col h-full p-gutter bg-surface-card border-r border-border-subtle shadow-sm fixed left-0 top-0 w-[280px] z-50">
+<div class="mb-10 flex items-center gap-3">
+<img class="w-10 h-10 rounded-lg object-cover" data-alt="A minimalist and modern fintech business logo featuring abstract geometric shapes in deep teal and mint colors against a clean white background. High resolution, vector style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByYr1PjJL0JYSzg1biugWHQBx-0gbAw4kiGzxf2Andy0P4ll6YfZMC8hRgtjGui7ZnV4xsYDy79xmkT2Mrk4k08mLieVTRzCXYup6XMrm5I4iTX8BWu9PZqtZ1IrY31HElmbdhR7tdFMewsyLFRr9SNrQ5YubygjmKxiD8cQx4K-5AbdyPWPcc7_7UisEZ6E8EOhAEeUqJeRxeXa3XSqAu_yyd4w_iITvwWW2-BMeQ2kD_1SZAdRcorw"/>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">CashFlow</h1>
+<p class="font-label-md text-label-md text-text-muted">Forecaster Pro</p>
+</div>
+</div>
+<div class="flex-grow space-y-2">
+<a class="group flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted hover:text-primary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Overview</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted hover:text-primary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="show_chart">show_chart</span>
+<span class="font-label-md text-label-md">Cashflow</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted hover:text-primary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md">Invoices</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 rounded-lg text-secondary font-bold bg-success-soft rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-md text-label-md">Expenses</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted hover:text-primary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+</div>
+<div class="mt-auto pt-8 border-t border-border-subtle">
+<button class="w-full bg-secondary text-on-secondary font-label-md text-label-md py-3 rounded-lg mb-6 hover:opacity-90 transition-opacity">
+                Predict Future
+            </button>
+<div class="space-y-2">
+<a class="group flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:text-primary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:text-primary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Sign Out</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-[280px] h-full overflow-y-auto bg-surface-main">
+<div class="max-w-[900px] mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-16">
+<!-- Page Header -->
+<header class="mb-12">
+<h2 class="font-headline-xl text-headline-xl text-primary mb-2">Spending Insights</h2>
+<p class="font-body-lg text-body-lg text-text-muted">Analyze your cash outflow across categories to optimize future runway.</p>
+</header>
+<!-- Grid Layout for Content -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Donut Chart & Legend (Hero Section) -->
+<div class="lg:col-span-7 bg-surface-card rounded-2xl p-8 shadow-soft border border-border-subtle flex flex-col items-center">
+<h3 class="font-headline-md text-headline-md text-primary self-start mb-8 w-full border-b border-border-subtle pb-4">Category Breakdown</h3>
+<!-- SVG Donut Chart -->
+<div class="relative w-64 h-64 mb-10">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<!-- Background ring -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#E5E1D8" stroke-width="12"></circle>
+<!-- Payroll 45% (Secondary / Teal) -->
+<circle class="donut-segment cursor-pointer" cx="50" cy="50" fill="transparent" r="40" stroke="#036c50" stroke-dasharray="113.097 251.327" stroke-dashoffset="0" stroke-width="20"></circle>
+<!-- Rent 25% (Secondary Container / Light Mint) -->
+<circle class="donut-segment cursor-pointer" cx="50" cy="50" fill="transparent" r="40" stroke="#9ef4d0" stroke-dasharray="62.83 251.327" stroke-dashoffset="-113.097" stroke-width="20"></circle>
+<!-- Operations 15% (Primary Container / Dark Slate) -->
+<circle class="donut-segment cursor-pointer" cx="50" cy="50" fill="transparent" r="40" stroke="#0f2d37" stroke-dasharray="37.699 251.327" stroke-dashoffset="-175.927" stroke-width="20"></circle>
+<!-- Software 10% (Tertiary Fixed Dim / Soft Amber) -->
+<circle class="donut-segment cursor-pointer" cx="50" cy="50" fill="transparent" r="40" stroke="#ffb596" stroke-dasharray="25.132 251.327" stroke-dashoffset="-213.626" stroke-width="20"></circle>
+<!-- Marketing 5% (Surface Tint / Gray Blue) -->
+<circle class="donut-segment cursor-pointer" cx="50" cy="50" fill="transparent" r="40" stroke="#47626e" stroke-dasharray="12.566 251.327" stroke-dashoffset="-238.758" stroke-width="20"></circle>
+</svg>
+<!-- Center Text -->
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+<span class="font-label-md text-label-md text-text-muted">Total Spend</span>
+<span class="font-headline-lg text-headline-lg text-primary">$124.5k</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="w-full space-y-4">
+<div class="flex items-center justify-between group p-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="font-body-md text-body-md text-primary">Payroll</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-md text-label-md text-text-muted">45%</span>
+<span class="font-body-md text-body-md text-primary font-medium w-16 text-right">$56,025</span>
+</div>
+</div>
+<div class="flex items-center justify-between group p-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-secondary-container"></div>
+<span class="font-body-md text-body-md text-primary">Rent</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-md text-label-md text-text-muted">25%</span>
+<span class="font-body-md text-body-md text-primary font-medium w-16 text-right">$31,125</span>
+</div>
+</div>
+<div class="flex items-center justify-between group p-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-primary-container"></div>
+<span class="font-body-md text-body-md text-primary">Operations</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-md text-label-md text-text-muted">15%</span>
+<span class="font-body-md text-body-md text-primary font-medium w-16 text-right">$18,675</span>
+</div>
+</div>
+<div class="flex items-center justify-between group p-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-tertiary-fixed-dim"></div>
+<span class="font-body-md text-body-md text-primary">Software</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-md text-label-md text-text-muted">10%</span>
+<span class="font-body-md text-body-md text-primary font-medium w-16 text-right">$12,450</span>
+</div>
+</div>
+<div class="flex items-center justify-between group p-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-surface-tint"></div>
+<span class="font-body-md text-body-md text-primary">Marketing</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-md text-label-md text-text-muted">5%</span>
+<span class="font-body-md text-body-md text-primary font-medium w-16 text-right">$6,225</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Top Merchant & Quick Stats -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- Top Merchant Card -->
+<div class="bg-surface-card rounded-2xl p-6 shadow-soft border border-border-subtle hover:-translate-y-1 transition-transform duration-300">
+<div class="flex justify-between items-start mb-6">
+<h4 class="font-label-md text-label-md text-text-muted uppercase tracking-wider">Top Merchant</h4>
+<span class="material-symbols-outlined text-outline" data-icon="more_horiz">more_horiz</span>
+</div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-xl border border-border-subtle bg-surface-container-lowest p-2 shadow-sm">
+<img class="w-full h-full object-contain" data-alt="A clean, minimalist logo for a generic cloud computing service named 'CloudStack', featuring soft blue and gray tones, flat vector design on a white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhC6vi6_klZZl9t1by4qn-1rvEWFfzRIa0g_K7sZvROO2wJNdbvWASdXSHDqPHle3pYeajTAQgJbgRqj2PeyMyxJVfPrj57aU2G6Mg1UHMjtU59CUnhFUld7KLqjmM3UJzQe5kCFKTruNlvZdyK_UtT_G3wDvjgi3_acO8Qiae5V7MXAkvXO3RkdY8xeU34yxgAcCIrPzI4bw82FsNi72YzdtsDvYzpQLDGKOmRWl3KLb-mPuw7M1ciA"/>
+</div>
+<div>
+<h5 class="font-headline-md text-headline-md text-primary">Google Cloud</h5>
+<p class="font-body-md text-body-md text-text-muted">Software &amp; Infrastructure</p>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-4 flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-text-muted mb-1">Spent this month</p>
+<p class="font-display-price text-display-price text-primary text-3xl">$4,850</p>
+</div>
+<div class="bg-warning-soft px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-on-tertiary-container text-sm" data-icon="trending_up">trending_up</span>
+<span class="font-label-md text-label-md text-on-tertiary-container">+12%</span>
+</div>
+</div>
+</div>
+<!-- Mini Insight Card 1 -->
+<div class="bg-surface-card rounded-2xl p-6 shadow-soft border border-border-subtle">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-secondary" data-icon="speed">speed</span>
+<h4 class="font-label-md text-label-md text-text-muted">Burn Rate Velocity</h4>
+</div>
+<p class="font-headline-lg text-headline-lg text-primary">$4.1k <span class="font-body-md text-body-md text-text-muted font-normal">/ day</span></p>
+<p class="font-label-md text-label-md text-secondary mt-2">Stable compared to last month.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CashFlow Forecaster - Dashboard</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001820",
+                        "surface-dim": "#dbdad5",
+                        "surface": "#fbf9f4",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-surface": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#c77f60",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#127256",
+                        "on-primary-fixed": "#001f28",
+                        "border-subtle": "#E5E1D8",
+                        "on-secondary-fixed-variant": "#00513b",
+                        "warning-soft": "#FDF2ED",
+                        "surface-container-low": "#f5f3ee",
+                        "secondary": "#036c50",
+                        "on-secondary-fixed": "#002116",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#2b0a00",
+                        "tertiary-container": "#4a1b04",
+                        "inverse-on-surface": "#f2f1ec",
+                        "primary-fixed": "#c9e7f4",
+                        "on-primary-fixed-variant": "#2f4b55",
+                        "primary-fixed-dim": "#aecbd8",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#42484a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e4e2dd",
+                        "secondary-fixed": "#9ef4d0",
+                        "background": "#fbf9f4",
+                        "on-tertiary-fixed-variant": "#6f371e",
+                        "secondary-fixed-dim": "#83d7b5",
+                        "surface-variant": "#e4e2dd",
+                        "on-primary-container": "#7895a1",
+                        "text-primary": "#1A1A1A",
+                        "surface-bright": "#fbf9f4",
+                        "text-muted": "#606060",
+                        "surface-container-high": "#eae8e3",
+                        "surface-main": "#F9F7F2",
+                        "inverse-primary": "#aecbd8",
+                        "tertiary-fixed": "#ffdbcd",
+                        "secondary-container": "#9ef4d0",
+                        "outline-variant": "#c2c7cb",
+                        "error": "#ba1a1a",
+                        "primary-container": "#0f2d37",
+                        "inverse-surface": "#30312e",
+                        "surface-container": "#f0eee9",
+                        "success-soft": "#E8F5EE",
+                        "surface-tint": "#47626e",
+                        "on-background": "#1b1c19",
+                        "surface-card": "#FFFFFF",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "outline": "#72787b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "margin-desktop": "64px",
+                        "base": "8px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "display-price": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-price": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Ambient depth for cards */
+        .card-elevation {
+            box-shadow: 0px 4px 20px rgba(0, 24, 32, 0.04);
+        }
+        
+        /* Chart specific */
+        .chart-grid { stroke: #E5E1D8; stroke-dasharray: 4 4; }
+        .chart-line-safe { stroke: #83d7b5; stroke-width: 3; fill: none; }
+        .chart-line-warn { stroke: #c77f60; stroke-width: 3; fill: none; }
+        .chart-threshold { stroke: #1A1A1A; stroke-width: 1; stroke-dasharray: 4 4; opacity: 0.3; }
+    </style>
+</head>
+<body class="bg-surface-main text-on-surface antialiased selection:bg-secondary-container selection:text-secondary-fixed-variant">
+<!-- SHARED COMPONENT: SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-8 px-4 bg-surface border-r border-border-subtle w-[280px] h-screen fixed left-0 top-0 transition-all duration-200 ease-in-out z-40">
+<!-- Brand Header -->
+<div class="flex items-center gap-3 mb-10 px-2">
+<div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined filled">bar_chart</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">CashFlow</h1>
+<p class="font-label-md text-label-md text-text-muted mt-[-4px]">Forecaster</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<ul class="flex flex-col gap-1 flex-grow">
+<!-- Active Item: Dashboard -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-surface-container text-secondary font-semibold font-body-md text-body-md transition-colors hover:bg-surface-container" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<!-- Inactive Item: Transactions -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">swap_horiz</span>
+                    Transactions
+                </a>
+</li>
+<!-- Inactive Item: Settings -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<!-- Bottom CTA from JSON -->
+<div class="mt-auto pt-6 border-t border-border-subtle">
+<button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md hover:bg-on-secondary-fixed-variant transition-colors">
+<span class="material-symbols-outlined">add</span>
+                Add transaction
+            </button>
+</div>
+</nav>
+<!-- SHARED COMPONENT: TopNavBar -->
+<header class="hidden md:flex justify-between items-center w-full px-8 py-4 ml-[280px] w-[calc(100%-280px)] bg-surface-main docked full-width top-0 sticky z-50 opacity-4 transition-all duration-200 ease-in-out cursor-pointer">
+<div class="flex-1">
+<!-- Product Name (Hidden if redundant, but strictly following JSON) -->
+<span class="font-body-md text-body-md text-primary font-medium invisible">CashFlow Forecaster</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-secondary transition-colors active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:text-secondary transition-colors active:scale-95">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="w-9 h-9 rounded-full bg-surface-container-highest overflow-hidden border border-border-subtle">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a person with a warm smile, well-lit against a neutral clean background, conveying trust and modern professionalism suitable for a fintech application profile avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT1QAe3y2X_jeG2PappP08dnOkspIORduT8JBbfPlORIOXWKHRf3DtPDCyc969X_r7KTh4HQZRD0qAGRCKKCp33YRrhEMGWs1McnqMpcW_U2m9EMFZ0baXyFC-zRELYXMBMSoUO7NP_Zy9kL54AA6BG_pzuv1HihmHd3RLt8B6k27Hzr4Di7xs5CQ3UjUW35qfx-H-8PAaRI4hO5HHvYY8HYgm0RERcSOmxWuDd6vO517I7wpkwKNbGA"/>
+</div>
+</div>
+</header>
+<!-- MAIN CONTENT CANVAS -->
+<main class="w-full md:ml-[280px] md:w-[calc(100%-280px)] min-h-screen p-margin-mobile md:p-8 md:pt-4">
+<div class="max-w-container-max mx-auto">
+<!-- Shortfall Banner -->
+<div class="bg-warning-soft border border-tertiary-fixed-dim rounded-xl p-4 mb-10 flex items-start sm:items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-[#FFFFFF] flex items-center justify-center flex-shrink-0 border border-tertiary-fixed-dim">
+<span class="material-symbols-outlined text-on-tertiary-container">calendar_today</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-tertiary-container font-semibold">Heads up — you're projected to be short by $420 on Sep 3</h3>
+<p class="font-body-md text-body-md text-text-muted text-sm mt-1">We recommend transferring funds or delaying a planned expense.</p>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-10">
+<!-- LEFT COLUMN (Hero Area & Chart) -->
+<div class="xl:col-span-8 flex flex-col gap-8">
+<!-- Balance Header -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md text-text-muted uppercase tracking-wider">Current Balance</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high border border-border-subtle text-xs font-label-md text-text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                Chase Checking
+                            </span>
+</div>
+<h2 class="font-display-price text-display-price text-text-primary">$12,450.30</h2>
+</div>
+<!-- Chart Card -->
+<div class="bg-surface-card rounded-xl p-8 card-elevation border border-border-subtle relative overflow-hidden group">
+<!-- Header -->
+<div class="flex justify-between items-center mb-8 relative z-10">
+<div>
+<h3 class="font-headline-md text-headline-md text-text-primary">6-Week Projection</h3>
+<p class="font-body-md text-body-md text-text-muted mt-1">Based on known income and upcoming bills.</p>
+</div>
+<div class="flex gap-1 bg-surface-container-low p-1 rounded-lg border border-border-subtle">
+<button class="px-4 py-1.5 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-text-primary transition-colors">4W</button>
+<button class="px-4 py-1.5 rounded-md bg-surface-card shadow-sm font-label-md text-label-md text-text-primary">6W</button>
+<button class="px-4 py-1.5 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-text-primary transition-colors">12W</button>
+</div>
+</div>
+<!-- Chart Visualization Area -->
+<div class="h-64 w-full relative z-10 mt-4">
+<svg class="overflow-visible" height="100%" preserveaspectratio="none" viewbox="0 0 800 250" width="100%">
+<defs>
+<!-- Gradients for fill -->
+<lineargradient id="mintFill" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#83d7b5" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="#83d7b5" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="warnFill" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#c77f60" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="#c77f60" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<line class="chart-grid" x1="0" x2="800" y1="50" y2="50"></line>
+<line class="chart-grid" x1="0" x2="800" y1="100" y2="100"></line>
+<line class="chart-grid" x1="0" x2="800" y1="150" y2="150"></line>
+<line class="chart-grid" x1="0" x2="800" y1="200" y2="200"></line>
+<!-- Zero Threshold Line -->
+<line class="chart-threshold" x1="0" x2="800" y1="180" y2="180"></line>
+<text class="font-label-md text-[12px] fill-text-muted" x="10" y="175">$0</text>
+<!-- Fills -->
+<!-- Safe zone fill -->
+<path d="M0 60 C 150 50, 300 140, 450 160 L 450 180 L 0 180 Z" fill="url(#mintFill)"></path>
+<!-- Danger zone fill -->
+<path d="M450 180 L 450 160 C 500 170, 550 220, 600 210 C 650 200, 750 120, 800 100 L 800 180 Z" fill="url(#warnFill)"></path>
+<!-- Lines -->
+<!-- Safe line -->
+<path class="chart-line-safe" d="M0 60 C 150 50, 300 140, 450 160"></path>
+<!-- Warn line (dip) -->
+<path class="chart-line-warn" d="M450 160 C 500 170, 550 220, 600 210"></path>
+<!-- Safe line recovery -->
+<path class="chart-line-safe" d="M600 210 C 650 200, 750 120, 800 100"></path>
+<!-- Data Points -->
+<circle cx="0" cy="60" fill="#036c50" r="3.5"></circle>
+<circle cx="450" cy="160" fill="#036c50" r="3.5"></circle>
+<!-- Dip Point (Sept 3 alert) -->
+<circle class="animate-pulse" cx="550" cy="220" fill="#c77f60" r="4.5"></circle>
+<text class="font-label-md text-[11px] fill-on-tertiary-container font-semibold" x="542" y="238">-$420</text>
+<circle cx="800" cy="100" fill="#036c50" r="3.5"></circle>
+</svg>
+</div>
+<!-- X-Axis Labels -->
+<div class="flex justify-between mt-4 font-label-md text-[13px] text-text-muted px-2">
+<span>Today</span>
+<span>Aug 15</span>
+<span>Aug 29</span>
+<span class="text-on-tertiary-container font-semibold">Sep 3</span>
+<span>Sep 12</span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN (Sidebar / Upcoming) -->
+<div class="xl:col-span-4 flex flex-col gap-6">
+<div class="flex justify-between items-end">
+<h3 class="font-headline-md text-headline-md text-text-primary">Upcoming known</h3>
+</div>
+<div class="bg-surface-card rounded-xl card-elevation border border-border-subtle flex flex-col">
+<!-- Transaction Item (Safe/Income) -->
+<div class="flex items-center justify-between p-5 border-b border-border-subtle hover:bg-surface-container-lowest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-success-soft flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">south_west</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-text-primary">Stripe Payout</p>
+<p class="font-body-md text-sm text-text-muted mt-0.5">Aug 4</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-secondary-container">+$4,250.00</p>
+</div>
+</div>
+<!-- Transaction Item (Expense) -->
+<div class="flex items-center justify-between p-5 border-b border-border-subtle hover:bg-surface-container-lowest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined">corporate_fare</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-text-primary">Office Rent</p>
+<p class="font-body-md text-sm text-text-muted mt-0.5">Aug 5</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-text-primary">-$2,100.00</p>
+</div>
+</div>
+<!-- Transaction Item (Manual Entry) -->
+<div class="flex items-center justify-between p-5 border-b border-border-subtle hover:bg-surface-container-lowest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-text-muted border border-border-subtle">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-text-primary">Contractor Invoice</p>
+<div class="flex items-center gap-2 mt-0.5">
+<p class="font-body-md text-sm text-text-muted">Aug 12</p>
+<span class="px-1.5 py-0.5 rounded text-[10px] uppercase font-bold bg-surface-container-high text-text-muted tracking-wide">Manual</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-text-primary">-$850.00</p>
+</div>
+</div>
+<!-- Transaction Item (The Shortfall trigger) -->
+<div class="flex items-center justify-between p-5 hover:bg-surface-container-lowest transition-colors cursor-pointer group relative overflow-hidden rounded-b-xl">
+<!-- Subtle warning highlight bg -->
+<div class="absolute inset-0 bg-warning-soft opacity-20 pointer-events-none"></div>
+<div class="flex items-center gap-4 relative z-10">
+<div class="w-10 h-10 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-text-primary">Quarterly Taxes</p>
+<div class="flex items-center gap-2 mt-0.5">
+<p class="font-body-md text-sm text-on-tertiary-container font-medium">Sep 3</p>
+</div>
+</div>
+</div>
+<div class="text-right relative z-10">
+<p class="font-label-md text-label-md text-text-primary">-$6,500.00</p>
+</div>
+</div>
+</div>
+<!-- CTA Button -->
+<button class="mt-2 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg border border-border-subtle bg-transparent text-secondary font-label-md text-label-md hover:bg-surface-container-low transition-colors group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">add_circle</span>
+                        Add expected income or expense
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

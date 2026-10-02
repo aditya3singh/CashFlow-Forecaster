@@ -54,12 +54,14 @@ from app.modules.bank.router import router as bank_router  # noqa: E402
 from app.modules.transaction.router import router as transaction_router  # noqa: E402
 from app.modules.forecast.router import router as forecast_router  # noqa: E402
 from app.modules.alert.router import router as alert_router  # noqa: E402
+from app.modules.payment.router import router as payment_router  # noqa: E402
 
 app.include_router(auth_router)
 app.include_router(bank_router)
 app.include_router(transaction_router)
 app.include_router(forecast_router)
 app.include_router(alert_router)
+app.include_router(payment_router)
 
 
 # ── Health Check ──

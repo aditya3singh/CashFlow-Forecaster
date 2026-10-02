@@ -8,6 +8,8 @@ from pydantic import BaseModel
 class ExchangeTokenRequest(BaseModel):
     """Request body for POST /api/v1/accounts/exchange-token"""
     public_token: str
+    institution_name: str | None = None
+    account_name: str | None = None
 
 
 class LinkTokenResponse(BaseModel):

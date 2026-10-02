@@ -11,6 +11,9 @@ Usage:
     original = decrypt_token(encrypted)
 """
 
+import base64
+import hashlib
+
 from cryptography.fernet import Fernet, InvalidToken
 
 from app.config import settings
@@ -18,8 +21,15 @@ from app.config import settings
 
 def _get_fernet() -> Fernet:
     """Get a Fernet instance with the configured key."""
-    key = settings.TOKEN_ENCRYPTION_KEY.encode()
-    return Fernet(key)
+    raw_key = settings.TOKEN_ENCRYPTION_KEY or "cashflow-development-secret-encryption-key"
+    try:
+        key = raw_key.encode()
+        return Fernet(key)
+    except Exception:
+        # If key is not valid 32 url-safe base64 bytes, derive one using SHA256
+        digest = hashlib.sha256(raw_key.encode()).digest()
+        url_safe_key = base64.urlsafe_b64encode(digest)
+        return Fernet(url_safe_key)
 
 
 def encrypt_token(token: str) -> bytes:

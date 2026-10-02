@@ -81,6 +81,7 @@ def run():
                         user_email=user.email,
                         shortfall_date=forecast_response.shortfall.date,
                         projected_balance=forecast_response.shortfall.projected_balance,
+                        business_name=user.business_name,
                     )
                     if sent:
                         alerts_sent += 1

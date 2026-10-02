@@ -19,6 +19,7 @@ def create_account(
     encrypted_access_token: bytes,
     institution_name: str | None = None,
     account_name: str | None = None,
+    current_balance: float | None = None,
 ) -> BankAccount:
     """
     Create a new bank account record.
@@ -30,6 +31,7 @@ def create_account(
         encrypted_access_token: Fernet-encrypted access token (NEVER plaintext).
         institution_name: Optional bank/institution name.
         account_name: Optional account name (e.g. "Checking").
+        current_balance: Optional starting balance.
 
     Returns:
         The created BankAccount object.
@@ -40,6 +42,7 @@ def create_account(
         encrypted_access_token=encrypted_access_token,
         institution_name=institution_name,
         account_name=account_name,
+        current_balance=current_balance,
     )
     db.add(account)
     db.commit()
